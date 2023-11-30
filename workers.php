@@ -34,6 +34,8 @@ if (isset($_POST['register'])) {
 //editar empleado
 
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +49,8 @@ if (isset($_POST['register'])) {
     table, th, td{
       border: 1px solid black;
       border-collapse: collapse;
+      margin: 0 auto;
+
     }
     th, td{
       padding: 10px;
@@ -73,7 +77,7 @@ if (isset($_POST['register'])) {
       <option value="admin">Administrador</option>
       <option value="helper">Ayudante</option>
   </select>
-</td>
+  </td>
 </tr>
 <input type="submit" name="register" >
 
@@ -100,19 +104,19 @@ if (isset($_POST['register'])) {
         $sql="SELECT * FROM empleado";
         $result=mysqli_query($conn,$sql);
 
-        while($mostrar = mysqli_fetch_array($result)){
+        while($fila = mysqli_fetch_array($result)){
 
     ?>
 
     <tr>
-      <td> <?php echo $mostrar['id'] ?></td>
-      <td> <?php echo $mostrar['name'] ?></td>
-      <td> <?php echo $mostrar['rol'] ?></td>
-      <td> <?php echo $mostrar['direccion'] ?></td>
-      <td> <?php echo $mostrar['telefono'] ?></td>
+      <td> <?php echo $fila['id'] ?></td>
+      <td> <?php echo $fila['name'] ?></td>
+      <td> <?php echo $fila['rol'] ?></td>
+      <td> <?php echo $fila['direccion'] ?></td>
+      <td> <?php echo $fila['telefono'] ?></td>
       <td>  
-        <button type="button" class="btn btn-primary">Edit</button>
-        <button type="button" class="btn btn-primary">Delete</button>
+        <?php echo "<a href='editar.php?id=".$fila['id']."'>EDITAR</a>"?>
+        <?php echo "<a href='eliminar.php?id=".$fila['id']."'>ELIMINAR</a>"?>
       </td>
     </tr>
     <?php

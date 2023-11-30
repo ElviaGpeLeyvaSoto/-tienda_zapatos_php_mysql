@@ -13,7 +13,7 @@
             <button type="button" class="btn btn-primary">Devoluciones</button>
 
         </a>
-        <a href="tabla_workers.php">
+        <a href="workers.php">
             <button type="button" class="btn btn-primary">Registro y Control de Empleados</button>
         </a>
     </footer>
