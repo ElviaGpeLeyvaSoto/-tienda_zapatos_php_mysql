@@ -2,8 +2,8 @@
 
 // Incluimos la conexión a la base de datos
 include("db.php");
-
-if (isset($_POST['workers_register_sent'])) {
+//if para agregar empleado
+if (isset($_POST['register'])) {
   
     if (strlen($_POST['nombre']) >= 1 && 
         strlen($_POST['role']) >= 1 && 
@@ -17,7 +17,7 @@ if (isset($_POST['workers_register_sent'])) {
         $consulta = "INSERT INTO empleado ( name, rol, direccion, telefono ) VALUES ('$name','$role','$address','$phone')";
         $resultado = mysqli_query($conn,$consulta);
 
-        if(resultado){
+        if($resultado){
           ?>
           <h3 class="ok">Empleado registrado correctamente</h3>
           <?php
@@ -31,60 +31,96 @@ if (isset($_POST['workers_register_sent'])) {
 
 }
 
+//editar empleado
+
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro y control de empleados</title>
+  <meta charset="UTF-8">
+  <title>Control de empleados</title>
+  <link rel="stylesheet" type="text/css" href="estilo.css">
 
-    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css' />
-
-    <link href="estilo.css" rel="stylesheet" type="text/css" />
+  <style>
+    table, th, td{
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    th, td{
+      padding: 10px;
+    }
+  </style>
 
 </head>
 <body>
-<div id="main">
+<!--FORMULARIO -->
+<form acton="tabla_workers.php" method="post">
 
-<div id="content" class="txt_content">
-  <h2>REGISTRO DE EMPLEADOS</h2>
-  <p>Llene lo que se le pide a continuación</p>
+<h1>Registro</h1>
+<input type="text" name = "nombre" placeholder = "Nombre completo" >
+<input type="text" name = "address" placeholder = "Dirección" >
+<input type="text" name = "phone" placeholder = "Telefono" >
 
-  <form action="tabla_workers.php" method="post">
-    <table>
-      <tr>
-        <td><label for="nombre">NOMBRE:*</label></td>
-        <td><input type="text" name="nombre"></td>
-      </tr>
-      <tr>
-        <td><label for="role">ROL:</label></td>
-        <td>
-          <select name="role">
-            <option value="employee" selected>Empleado</option>
-            <option value="admin">Administrador</option>
-            <option value="helper">Ayudante</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td><label for="address">DIRECCION:*</label></td>
-        <td><input type="text" name="address"></td>
-      </tr>
-      <tr>
-        <td><label for="phone">TELEFONO:</label></td>
-        <td><input type="text" name="phone"></td>
-      </tr>
-      
-      <tr>
-        <td></td>
-        <td><input type="submit" value="REGISTRAR" name="workers_register_sent"></td>
-      </tr>
-    </table>
-  </form>
+<br>
+
+<tr>
+  <td><label for="role">Role:</label></td>
+  <td>
+  <select name="role">
+      <option value="employee" selected>Empleado</option>
+      <option value="admin">Administrador</option>
+      <option value="helper">Ayudante</option>
+  </select>
+</td>
+</tr>
+<input type="submit" name="register" >
+
+</form>
+<!--TABLA DE EMPLEADOS -->
+<h2>Empleados</h2>
+
+<br>
+
+<table >
+
+    <tr>
+        <th>ID</th>
+        <th>NOMBRE</th>
+        <th>ROL</th>
+        <th>DIRECCION</th>
+        <th>TELEFONO</th>
+        <th>EDITAR</th>
+    </tr>
   
-</div>
+
+    <?php
+
+        $sql="SELECT * FROM empleado";
+        $result=mysqli_query($conn,$sql);
+
+        while($mostrar = mysqli_fetch_array($result)){
+
+    ?>
+
+    <tr>
+      <td> <?php echo $mostrar['id'] ?></td>
+      <td> <?php echo $mostrar['name'] ?></td>
+      <td> <?php echo $mostrar['rol'] ?></td>
+      <td> <?php echo $mostrar['direccion'] ?></td>
+      <td> <?php echo $mostrar['telefono'] ?></td>
+      <td>  
+        <button type="button" class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-primary">Delete</button>
+      </td>
+    </tr>
+    <?php
+    }
+    ?>
+
+</table>
+
+  
 </body>
 </html>
