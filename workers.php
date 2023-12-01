@@ -57,6 +57,12 @@ if (isset($_POST['register'])) {
     }
   </style>
 
+  <script type = "text/javascript">
+    function confirmar(){
+      return confirm('¿Estas seguro?, se eliminaran los datos');
+    }
+  </script>
+
 </head>
 <body>
 <!--FORMULARIO -->
@@ -116,7 +122,7 @@ if (isset($_POST['register'])) {
       <td> <?php echo $fila['telefono'] ?></td>
       <td>  
         <?php echo "<a href='editar.php?id=".$fila['id']."'>EDITAR</a>"?>
-        <?php echo "<a href='eliminar.php?id=".$fila['id']."'>ELIMINAR</a>"?>
+        <?php echo "<a href='eliminar.php?id=".$fila['id']."' onclick = 'return confirmar()'>ELIMINAR</a>"?>
       </td>
     </tr>
     <?php
@@ -128,3 +134,4 @@ if (isset($_POST['register'])) {
   
 </body>
 </html>
+<?php include('includes/footer.php') ?>
